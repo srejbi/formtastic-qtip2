@@ -53,17 +53,19 @@
 // SOFTWARE.
 
 
-
+// hide all inline-hints
+$(".inline-hints").hide();
 // set qtip2 tooltips in conjunction with formtastic's 'inline-hints' class
 $(".inline-hints").each(function(){
   var input = $(this.parentNode);
-  $(this).hide();   // hide the inline-hint
+  //$(this).hide();   // hide the inline-hint
   // assign tooltip
   input.qtip({
     position: {at: "bottom middle", my: "top middle"},
     content: {text: function(api) {
-         $(this)[0].lastChild.firstChild.display = 0;
-         return $(this)[0].lastChild.firstChild.wholeText;
+         var hinttext = $(this)[0].lastChild.firstChild.parentElement.attributes[0].nodeName == 'class' && $(this)[0].lastChild.firstChild.parentElement.attributes[0].nodeValue == 'inline-errors' ? $(this)[0].children[$(this)[0].children.length-2].firstChild.wholeText : $(this)[0].lastChild.firstChild.wholeText;
+         return hinttext;
+         //return $(this)[0].children[2].firstChild.wholeText;
         }
       }
   });
